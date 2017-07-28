@@ -14,3 +14,15 @@ ticket_statuses = ['waiting for staff response', 'waiting for customer', 'on hol
 ticket_statuses.each do |status|
   TicketStatus.find_or_create_by(name: status)
 end
+
+# ===============================
+# department
+# ===============================
+departments =
+  [
+    'Copyright Services', 'Legal Services', 'Management Information',
+    'Quality Advancement', 'Cleaning & Hygiene', 'Catering'
+  ]
+departments.each do |department_name|
+  Department.create(name: department_name)
+end
