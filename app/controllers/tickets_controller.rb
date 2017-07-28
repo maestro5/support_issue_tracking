@@ -1,5 +1,6 @@
 class TicketsController < ApplicationController
-  before_action :set_ticket, only: %i(show edit)
+  before_action :set_ticket, only: %i(show edit update)
+  before_action :edit_allowed?, only: %i(edit update)
 
   def index
     if user_signed_in?
@@ -41,6 +42,16 @@ private
 
   def set_ticket
     @ticket = Ticket.find(params[:id])
+  end
+
+  def edit_allowed?
+    unless policy.allowed?
+      redirect_to root_path, notice: 'The reference number for the ticket does not match!'
+    end
+  end
+
+  def policy
+    UpdateTicketPolicy.new(current_user, @ticket, params[:ref_number])
   end
 
 end

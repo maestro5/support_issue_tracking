@@ -1,0 +1,8 @@
+- return unless message.persisted?
+
+.message
+  %p
+    %strong= message.user ? message.user.name : @ticket.name
+  %p= message.body
+  %p= message.created_at
+%hr

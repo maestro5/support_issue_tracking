@@ -1,0 +1,8 @@
+.customer
+  %p
+    = @ticket.name
+  = form_for @ticket do |f|
+    = f.fields_for :messages, @ticket.messages.build do |messages_form|
+      = messages_form.label :body
+      = messages_form.text_area :body
+      = f.button name: 'ref_number', value: @ticket.reference_number
