@@ -1,0 +1,10 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1= @message
+    %p
+      Your ticket number: #{@reference_number}
+      You can use that link to view the ticket's history:
+      = link_to "Ticket #{@reference_number}", @ticket_url

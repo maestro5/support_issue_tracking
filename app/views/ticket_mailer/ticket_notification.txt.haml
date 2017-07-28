@@ -1,0 +1,5 @@
+%h1= @message
+%p
+  Your ticket number: #{@ticket.reference_number}
+  You can use that link to view the ticket's history:
+  = link_to "Ticket #{@ticket.reference_number}", @ticket_url
