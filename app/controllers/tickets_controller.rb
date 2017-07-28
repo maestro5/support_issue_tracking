@@ -4,7 +4,7 @@ class TicketsController < ApplicationController
 
   def index
     if user_signed_in?
-      @tickets = Ticket.unassigned
+      @tickets = Ticket.manager_search(params[:search]).unassigned
     else
       @tickets = Ticket.customer_search(params[:search]) if params[:search]
     end

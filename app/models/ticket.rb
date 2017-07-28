@@ -17,8 +17,10 @@ class Ticket < ActiveRecord::Base
 
   scope :unassigned, -> { where(user_id: nil).order(created_at: :asc) }
   scope :closed, -> { where(ticket_status: TicketStatus.completed).order(created_at: :asc) }
+  scope :open, -> { Ticket.where('ticket_status_id IS NULL OR ticket_status_id != ?', TicketStatus.completed).order(created_at: :asc) }
   scope :customer_search, -> (words) { Ticket.search(words, fields: [:subject, :question]).records.closed if words }
-
+  scope :manager_search, -> (words) { Ticket.search(words, fields: [:subject, :reference_number]).records.open if words }
+  
   searchkick
 
 private
