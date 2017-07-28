@@ -4,4 +4,9 @@
 = link_to 'Add ticket', new_ticket_path
 
 %hr
+  %ul
+    - ['Unassigned', 'Open', 'On hold', 'Closed'].each do |filter|
+      %li= link_to filter, root_path(filter: filter.downcase.gsub(' ', '_'))
+
+%hr
 = render @tickets if @tickets
