@@ -1,0 +1,7 @@
+= render 'ticket_show'
+
+= render 'shared/error_messages', object: @service
+
+- if user_signed_in? 
+  = render 'manager_form'
+

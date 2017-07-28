@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728032504) do
+ActiveRecord::Schema.define(version: 20170728041842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,17 @@ ActiveRecord::Schema.define(version: 20170728032504) do
 
   add_index "messages", ["ticket_id"], name: "index_messages_on_ticket_id", using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
+  create_table "ticket_changes", force: :cascade do |t|
+    t.integer  "ticket_id",       null: false
+    t.integer  "changeable_id",   null: false
+    t.string   "changeable_type", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "ticket_changes", ["changeable_type", "changeable_id"], name: "index_ticket_changes_on_changeable_type_and_changeable_id", using: :btree
+  add_index "ticket_changes", ["ticket_id"], name: "index_ticket_changes_on_ticket_id", using: :btree
 
   create_table "ticket_statuses", force: :cascade do |t|
     t.string   "name",       default: "", null: false
@@ -79,6 +90,7 @@ ActiveRecord::Schema.define(version: 20170728032504) do
 
   add_foreign_key "messages", "tickets"
   add_foreign_key "messages", "users"
+  add_foreign_key "ticket_changes", "tickets"
   add_foreign_key "tickets", "departments"
   add_foreign_key "tickets", "ticket_statuses"
   add_foreign_key "tickets", "users"

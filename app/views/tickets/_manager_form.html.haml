@@ -1,0 +1,12 @@
+.manager
+  %p
+    Manager: 
+    = current_user.name
+
+  = form_for @ticket do |f|
+    = f.collection_select(:user_id, User.all, :id, :email, include_blank: '')
+    = f.collection_select(:ticket_status_id, TicketStatus.all, :id, :name, include_blank: '')
+    = f.fields_for :messages, @ticket.messages.build do |messages_form|
+      = messages_form.hidden_field :user_id, value: current_user.id
+      = messages_form.text_area :body
+    = f.submit

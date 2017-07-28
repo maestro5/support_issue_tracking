@@ -1,8 +1,10 @@
 class TicketsController < ApplicationController
-  before_action :set_ticket, only: :show
+  before_action :set_ticket, only: %i(show edit)
 
   def index
-    @ticket = Ticket.all
+    if user_signed_in?
+      @tickets = Ticket.unassigned
+    end
   end
 
   def new
@@ -20,6 +22,19 @@ class TicketsController < ApplicationController
   end
 
   def show
+  end
+
+  def edit
+  end
+
+  def update
+    @service = TicketUpdateService.(user: current_user, params: params)
+    @ticket = @service.ticket
+    if @service.success?
+      redirect_to @ticket, notice: 'Your ticket has been successfully updated!'
+    else
+      render :edit
+    end
   end
 
 private

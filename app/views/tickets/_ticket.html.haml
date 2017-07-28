@@ -1,0 +1,11 @@
+.ticket
+  %p Date: #{ticket.created_at}
+  %p
+    Subject:
+    - if user_signed_in? 
+      = link_to ticket.subject, edit_ticket_path(ticket)
+    - else
+      = link_to ticket.subject, ticket_path(ticket)
+  %p Department: #{ticket.department_name}
+  %p Status: #{ticket.ticket_status_name}
+  %hr
