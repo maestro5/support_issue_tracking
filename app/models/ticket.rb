@@ -16,6 +16,10 @@ class Ticket < ActiveRecord::Base
   delegate :name, to: :department, prefix: true, allow_nil: true
 
   scope :unassigned, -> { where(user_id: nil).order(created_at: :asc) }
+  scope :closed, -> { where(ticket_status: TicketStatus.completed).order(created_at: :asc) }
+  scope :customer_search, -> (words) { Ticket.search(words, fields: [:subject, :question]).records.closed if words }
+
+  searchkick
 
 private
   def email_downcase!
